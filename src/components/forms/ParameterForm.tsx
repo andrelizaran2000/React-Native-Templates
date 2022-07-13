@@ -1,9 +1,12 @@
 // Modules
 import React from 'react'
-import { Button, HStack, Text, TextInput, VStack } from '@react-native-material/core';
+import Checkbox from 'expo-checkbox';
+import { Picker } from '@react-native-picker/picker';
+import { Box, Button, HStack, Text, TextInput, VStack } from '@react-native-material/core';
 
 // Components
 import Paper from '../shared/Paper';
+import useCustomPalette from '../../utils/useCustomPalette';
 
 type FormInformation = {
   inputs: InputInformation[];
@@ -18,7 +21,13 @@ type FormInformation = {
 
 export type InputInformation = {
   title: string;
-  type: 'text' | 'date' | 'select' | 'password' | 'email';
+  type: 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox';
+  options?: SelectInformation[]
+}
+
+export type SelectInformation = {
+  id: number;
+  label: string;
 }
 
 export default function ParameterForm (props:FormInformation) {
@@ -31,7 +40,7 @@ export default function ParameterForm (props:FormInformation) {
     primaryButtonColor,
     secondaryButtonColor,
     primaryButtonTintColor = 'white',
-    secondaryButtonTintColor = 'white' 
+    secondaryButtonTintColor = 'white',
   } = props;
 
   return (
@@ -61,9 +70,10 @@ type TextInputListProps = {
 }
 
 function TextInputList ({ inputs }:TextInputListProps) {
+
   return (
     <VStack spacing={10} mb={20}>
-      {inputs.map(({ type, title }, index) => { 
+      {inputs.map(({ type, title, options = [] }, index) => { 
         switch (type) {
           case 'text':
             return <TextInput variant='outlined' label={title} key={index}/>
@@ -71,10 +81,43 @@ function TextInputList ({ inputs }:TextInputListProps) {
             return <TextInput variant='outlined' label={title} keyboardType='email-address' key={index}/>
           case 'password':
             return <TextInput variant='outlined' label={title} secureTextEntry={true} key={index}/>
+          case 'select':
+            return <CustomPicker options={options} key={index}/>
+          case 'checkbox':
+            return <CustomCheckBox title={title} key={index}/>
           default:
             return <></>
         } 
       })}
     </VStack>
+  )
+}
+
+type CustomPickerProps = {
+  options:SelectInformation[]
+}
+
+function CustomPicker ({ options }:CustomPickerProps) {
+  const { disabled } = useCustomPalette();
+  return (
+    <Box style={{ borderColor:disabled, borderRadius:5, borderWidth:1, marginBottom:15, paddingLeft:5 }}>
+      <Picker selectedValue={options[0].id} onValueChange={() => {}} >
+        {options.map(({ id, label }, index) => <Picker.Item label={label} value={id} key={index}/>)}
+      </Picker>
+    </Box>
+  )
+}
+
+type CustomCheckBoxProps = {
+  title:string;
+}
+
+function CustomCheckBox ({ title }:CustomCheckBoxProps) {
+  const { primary } = useCustomPalette();
+  return (
+    <HStack spacing={10}>
+      <Text>{title}</Text>
+      <Checkbox value={true} onValueChange={() => {}} color={primary}/>
+    </HStack>
   )
 }

@@ -5,6 +5,7 @@ export default function useCustomPalette () {
     background: '#EEE',
     cancel: '#DDD',
     disabled: '#AAA',
+    actionBar: '#3949ab'
   }
   return palette;
 }

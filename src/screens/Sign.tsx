@@ -13,7 +13,7 @@ const inputs:InputInformation[] = [
   { title:'Contraseña', type:'password' }
 ]
 
-export default function Sign() {
+export default function Sign () {
 
   const { primary, secondary, cancel } = useCustomPalette()
 
