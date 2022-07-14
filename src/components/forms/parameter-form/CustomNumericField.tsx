@@ -25,6 +25,8 @@ export default function CustomNumericField (props:CustomTextInputProps) {
       leading={props => icon && <Icon name={icon as any} {...props} />} 
       style={{ marginBottom:10 }}
       editable={!isLoading}
+      value={formValues[inputName].value}
+      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ error:'', value:text }})}
     />
   )
 }

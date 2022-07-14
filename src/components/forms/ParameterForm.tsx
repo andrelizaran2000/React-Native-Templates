@@ -69,7 +69,17 @@ export default function ParameterForm (props:ParameterFormProps) {
     onSubmit
   } = formInformation;
 
-  const { formValues, setFormValues } = useForm({});  
+  const { formValues, setFormValues } = useForm(() => {
+    var inputObject = {};
+    inputs.forEach(({ inputName }) => {
+      // @ts-ignore
+      inputObject[inputName] = {
+        value:'',
+        error:''
+      }
+    })
+    return inputObject;
+  });  
 
   return (
     <Paper>

@@ -25,6 +25,8 @@ export default function CustomPasswordField (props:CustomTextInputProps) {
       style={{ marginBottom:10 }}
       editable={!isLoading}
       leading={props => icon && <Icon name={icon as any} {...props} />} 
+      value={formValues[inputName].value}
+      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ error:'', value:text }})}
     />
   )
 }

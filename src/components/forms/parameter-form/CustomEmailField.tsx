@@ -27,6 +27,8 @@ export default function CustomEmailField (props:CustomTextInputProps) {
       editable={!isLoading}
       style={{ marginBottom:10 }}
       leading={props => icon && <Icon name={icon as IconOptions} {...props} />} 
+      value={formValues[inputName].value}
+      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ error:'', value:text }})}
     />
   )
 }
