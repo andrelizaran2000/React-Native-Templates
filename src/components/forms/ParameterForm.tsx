@@ -1,13 +1,16 @@
 // Modules
 import React from 'react'
-import Checkbox from 'expo-checkbox';
-import { Picker } from '@react-native-picker/picker';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Box, Button, HStack, Text, TextInput, VStack } from '@react-native-material/core';
+import { Button, HStack, Text, VStack } from '@react-native-material/core';
 
 // Components
 import Paper from '../shared/Paper';
-import useCustomPalette from '../../hooks/useCustomPalette';
+import CustomPicker from './parameter-form/CustomPicker';
+import CustomCheckBox from './parameter-form/CustomCheckBox';
+import CustomTextField from './parameter-form/CustomTextField';
+import CustomEmailField from './parameter-form/CustomEmailField';
+import CustomPasswordField from './parameter-form/CustomPasswordField';
+import CustomNumericField from './parameter-form/CustomNumericField';
+import useForm from '../../hooks/useForm';
 
 type FormInformation = {
   inputs: InputInformation[];
@@ -18,13 +21,22 @@ type FormInformation = {
   secondaryButtonColor: string;
   secondaryButtonTitle: string;
   secondaryButtonTintColor?: string;
+  isLoading:boolean
+  inputValues:any;
+  onSubmit: (data:any) => void;
 }
+
+export type IconOptions = 'currency-usd';
+
+export type TextFieldOptions = 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox' | 'numeric';
 
 export type InputInformation = {
   title: string;
-  type: 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox' | 'numeric';
+  inputName:string;
+  type: TextFieldOptions;
+  required?: boolean;
+  icon?: IconOptions;
   options?: SelectInformation[];
-  icon?: 'currency-usd'
 }
 
 export type SelectInformation = {
@@ -43,24 +55,42 @@ export default function ParameterForm (props:FormInformation) {
     secondaryButtonColor,
     primaryButtonTintColor = 'white',
     secondaryButtonTintColor = 'white',
+    isLoading,
+    inputValues,
+    onSubmit
   } = props;
+
+  const { formValues, setFormValues } = useForm(inputValues);
+
+  function validateFormValues () {
+    const formValuesAsObject = formValues as Object;
+    Object.keys(formValuesAsObject).forEach((key) => {});
+  }
 
   return (
     <Paper>
       <Text variant='h6'>{formTitle}</Text>
-      <TextInputList inputs={inputs}/>
+      <TextInputList 
+        inputs={inputs} 
+        isLoading={isLoading} 
+        formValues={formValues}
+        setFormValues={setFormValues}
+      />
       <HStack spacing={20}>
         <Button 
           variant='contained' 
           title={primaryButtonTitle}
           color={primaryButtonColor}
           tintColor={primaryButtonTintColor}
+          disabled={isLoading}
+          onPress={validateFormValues}
         />
         <Button 
           variant='contained' 
           title={secondaryButtonTitle}
           color={secondaryButtonColor}
           tintColor={secondaryButtonTintColor}
+          disabled={isLoading}
         />
       </HStack>
     </Paper>
@@ -68,31 +98,67 @@ export default function ParameterForm (props:FormInformation) {
 }
 
 type TextInputListProps = {
-  inputs: InputInformation[]
+  inputs: InputInformation[];
+  isLoading: boolean;
+  formValues: any;
+  setFormValues: React.Dispatch<any>;
 }
 
-function TextInputList ({ inputs }:TextInputListProps) {
+function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInputListProps) {
 
   return (
-    <VStack spacing={10} mb={20}>
-      {inputs.map(({ type, title, options = [], icon }, index) => { 
+    <VStack mb={20}>
+      {inputs.map(({ type, title, options = [], icon, inputName, required = true }, index) => { 
         switch (type) {
           case 'text':
-            return <TextInput variant='outlined' label={title} key={index}/>
-          case 'email':
-            return <TextInput variant='outlined' label={title} keyboardType='email-address' key={index}/>
-          case 'password':
-            return <TextInput variant='outlined' label={title} secureTextEntry={true} key={index}/>
-          case 'numeric':
             return (
-              <TextInput 
-                variant='outlined' 
-                label={title} 
-                keyboardType='number-pad' 
-                leading={props => icon && <Icon name={icon} {...props} />} 
-                key={index}
+              <CustomTextField 
+                title={title} 
+                key={index} 
+                isLoading={isLoading} 
+                inputName={inputName} 
+                required={required}
+                formValues={formValues}
+                setFormValues={setFormValues}
               />
             )
+          case 'email':
+            return (
+              <CustomEmailField 
+                title={title} 
+                key={index} 
+                isLoading={isLoading} 
+                inputName={inputName} 
+                required={required}
+                formValues={formValues}
+                setFormValues={setFormValues}
+              />
+            )
+          case 'password':
+            return (
+              <CustomPasswordField 
+                title={title} 
+                key={index} 
+                isLoading={isLoading} 
+                inputName={inputName} 
+                required={required}
+                formValues={formValues}
+                setFormValues={setFormValues}
+              />
+            )
+          case 'numeric':
+            return (
+              <CustomNumericField 
+                icon={icon} 
+                title={title} 
+                key={index} 
+                isLoading={isLoading} 
+                inputName={inputName} 
+                required={required}
+                formValues={formValues}
+                setFormValues={setFormValues}
+              />
+            ) 
           case 'select':
             return <CustomPicker options={options} key={index}/>
           case 'checkbox':
@@ -102,34 +168,5 @@ function TextInputList ({ inputs }:TextInputListProps) {
         } 
       })}
     </VStack>
-  )
-}
-
-type CustomPickerProps = {
-  options:SelectInformation[]
-}
-
-function CustomPicker ({ options }:CustomPickerProps) {
-  const { disabled } = useCustomPalette();
-  return (
-    <Box style={{ borderColor:disabled, borderRadius:5, borderWidth:1, marginBottom:15, paddingLeft:5 }}>
-      <Picker selectedValue={options[0].id} onValueChange={() => {}} >
-        {options.map(({ id, label }, index) => <Picker.Item label={label} value={id} key={index}/>)}
-      </Picker>
-    </Box>
-  )
-}
-
-type CustomCheckBoxProps = {
-  title:string;
-}
-
-function CustomCheckBox ({ title }:CustomCheckBoxProps) {
-  const { primary } = useCustomPalette();
-  return (
-    <HStack spacing={10}>
-      <Text>{title}</Text>
-      <Checkbox value={true} onValueChange={() => {}} color={primary}/>
-    </HStack>
   )
 }
