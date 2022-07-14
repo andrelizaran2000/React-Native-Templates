@@ -1,21 +1,9 @@
 // Modules
-import React from 'react'
-import { Button, HStack, Text, VStack } from '@react-native-material/core';
+import React, { ReactNode } from 'react'
+import { Button, HStack, Text } from '@react-native-material/core';
 
-// Components
+// Component
 import Paper from '../shared/Paper';
-import CustomPicker from './parameter-form/CustomPicker';
-import CustomCheckBox from './parameter-form/CustomCheckBox';
-import CustomTextField from './parameter-form/CustomTextField';
-import CustomEmailField from './parameter-form/CustomEmailField';
-import CustomPasswordField from './parameter-form/CustomPasswordField';
-import CustomNumericField from './parameter-form/CustomNumericField';
-
-// Hooks
-import useForm from '../../hooks/useForm';
-
-// Types
-import { AllPosibleTextsField, FieldTypes } from './parameter-form/types';
 
 export type PrimaryButtonSettings = {
   primaryButtonColor: string;
@@ -33,13 +21,13 @@ export type FormInformation = {
   formTitle: string;
   isLoading:boolean;
   onSubmit: (data:any) => void;
-  inputs: AllPosibleTextsField[];
 }
 
 type ParameterFormProps = {
-  primaryButtonSettings:PrimaryButtonSettings;
-  secondaryButtonSettings:SecondaryButtonSettings;
-  formInformation:FormInformation;
+  primaryButtonSettings: PrimaryButtonSettings;
+  secondaryButtonSettings: SecondaryButtonSettings;
+  formInformation: FormInformation;
+  children: ReactNode;
 }
 
 export default function ParameterForm (props:ParameterFormProps) {
@@ -47,7 +35,8 @@ export default function ParameterForm (props:ParameterFormProps) {
   const { 
     formInformation, 
     primaryButtonSettings, 
-    secondaryButtonSettings 
+    secondaryButtonSettings,
+    children 
   } = props;
 
   const { 
@@ -63,33 +52,15 @@ export default function ParameterForm (props:ParameterFormProps) {
   } = secondaryButtonSettings;
 
   const {
-    inputs,
     formTitle, 
     isLoading,
-    onSubmit
+    onSubmit,
   } = formInformation;
-
-  const { formValues, setFormValues } = useForm(() => {
-    var inputObject = {};
-    inputs.forEach(({ inputName }) => {
-      // @ts-ignore
-      inputObject[inputName] = {
-        value:'',
-        error:''
-      }
-    })
-    return inputObject;
-  });  
 
   return (
     <Paper>
       <Text variant='h6'>{formTitle}</Text>
-      <TextInputList 
-        inputs={inputs} 
-        isLoading={isLoading} 
-        formValues={formValues}
-        setFormValues={setFormValues}
-      />
+      {children}
       <HStack spacing={20}>
         <Button 
           variant='contained' 
@@ -108,82 +79,5 @@ export default function ParameterForm (props:ParameterFormProps) {
         />
       </HStack>
     </Paper>
-  )
-}
-
-type TextInputListProps = {
-  inputs: AllPosibleTextsField[];
-  isLoading: boolean;
-  formValues: any;
-  setFormValues: React.Dispatch<any>;
-}
-
-function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInputListProps) {
-
-  return (
-    <VStack mb={20}>
-      {inputs.map(({ title, inputName, required = true, type, icon }, index) => { 
-        switch (type) {
-          case FieldTypes.TEXT:
-            return (
-              <CustomTextField 
-                icon={icon}
-                title={title} 
-                key={index} 
-                isLoading={isLoading} 
-                inputName={inputName} 
-                required={required}
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            )
-          case FieldTypes.EMAIL:
-            return (
-              <CustomEmailField 
-                icon={icon}
-                title={title} 
-                key={index} 
-                isLoading={isLoading} 
-                inputName={inputName} 
-                required={required}
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            )
-          case FieldTypes.PASSWORD:
-            return (
-              <CustomPasswordField 
-                icon={icon}
-                title={title} 
-                key={index} 
-                isLoading={isLoading} 
-                inputName={inputName} 
-                required={required}
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            )
-          case FieldTypes.NUMERIC:
-            return (
-              <CustomNumericField 
-                icon={icon} 
-                title={title} 
-                key={index} 
-                isLoading={isLoading} 
-                inputName={inputName} 
-                required={required}
-                formValues={formValues}
-                setFormValues={setFormValues}
-              />
-            ) 
-          // case 'select':
-          //   return <CustomPicker options={options} key={index}/>
-          // case 'checkbox':
-          //   return <CustomCheckBox title={title} key={index}/>
-          default:
-            return <></>
-        } 
-      })}
-    </VStack>
   )
 }
