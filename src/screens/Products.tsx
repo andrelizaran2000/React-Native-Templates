@@ -1,11 +1,11 @@
 // Modules
-import React from 'react'
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Box, ListItem, Text, VStack } from '@react-native-material/core';
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 // Components
 import Paper from '../components/shared/Paper'
-import { ScrollView } from 'react-native';
 
 const productList:ProductItemProps[] = [
   { title:'S22', secondary:'Samsung' },
@@ -20,11 +20,12 @@ const productList:ProductItemProps[] = [
 ]
 
 export default function Products () {
+  const windowHeight = Dimensions.get('window').height;
   return (
     <Box style={{ padding:20 }}>
       <Paper>
         <Text variant='h6'>Productos disponibles</Text>
-          <ScrollView style={{ maxHeight:400 }}>
+          <ScrollView style={{ maxHeight:(windowHeight-210) }}>
             <VStack >
             {productList.map((props, index) => <ProductItem {...props} key={index}/>)}
           </VStack> 

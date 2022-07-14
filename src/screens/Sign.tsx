@@ -3,7 +3,7 @@ import React from 'react'
 import { Box } from '@react-native-material/core'
 
 // Hooks
-import useCustomPalette from '../utils/useCustomPalette'
+import useCustomPalette from '../hooks/useCustomPalette'
 
 // Components
 import ParameterForm, { InputInformation } from '../components/forms/ParameterForm'

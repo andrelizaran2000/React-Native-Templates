@@ -1,16 +1,21 @@
 // Modules
 import React from 'react';
+import { Provider } from 'react-redux';
+import { StatusBar } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
 // Routers
 import StackDrawer from './src/router/StackDrawer';
-import useCustomPalette from './src/utils/useCustomPalette';
-import { StatusBar } from 'react-native';
+
+// Hooks
+import useCustomPalette from './src/hooks/useCustomPalette';
+
+// Store
+import { store } from './src/store/store';
 
 export default function App() {
-
+  
   const { actionBar } = useCustomPalette()
-
   const MyTheme = {
     ...DefaultTheme,
     colors: {
@@ -19,7 +24,7 @@ export default function App() {
       text: 'white',
     },
   };
-  
+
   return ( 
     <NavigationContainer theme={MyTheme}>
       <StatusBar
@@ -27,7 +32,9 @@ export default function App() {
         barStyle="light-content"
         backgroundColor={actionBar}
       />
-      <StackDrawer/>
+      <Provider store={store}>
+        <StackDrawer/>
+      </Provider>
     </NavigationContainer>
   )
 }

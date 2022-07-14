@@ -2,11 +2,12 @@
 import React from 'react'
 import Checkbox from 'expo-checkbox';
 import { Picker } from '@react-native-picker/picker';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button, HStack, Text, TextInput, VStack } from '@react-native-material/core';
 
 // Components
 import Paper from '../shared/Paper';
-import useCustomPalette from '../../utils/useCustomPalette';
+import useCustomPalette from '../../hooks/useCustomPalette';
 
 type FormInformation = {
   inputs: InputInformation[];
@@ -21,8 +22,9 @@ type FormInformation = {
 
 export type InputInformation = {
   title: string;
-  type: 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox';
-  options?: SelectInformation[]
+  type: 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox' | 'numeric';
+  options?: SelectInformation[];
+  icon?: 'currency-usd'
 }
 
 export type SelectInformation = {
@@ -73,7 +75,7 @@ function TextInputList ({ inputs }:TextInputListProps) {
 
   return (
     <VStack spacing={10} mb={20}>
-      {inputs.map(({ type, title, options = [] }, index) => { 
+      {inputs.map(({ type, title, options = [], icon }, index) => { 
         switch (type) {
           case 'text':
             return <TextInput variant='outlined' label={title} key={index}/>
@@ -81,6 +83,16 @@ function TextInputList ({ inputs }:TextInputListProps) {
             return <TextInput variant='outlined' label={title} keyboardType='email-address' key={index}/>
           case 'password':
             return <TextInput variant='outlined' label={title} secureTextEntry={true} key={index}/>
+          case 'numeric':
+            return (
+              <TextInput 
+                variant='outlined' 
+                label={title} 
+                keyboardType='number-pad' 
+                leading={props => icon && <Icon name={icon} {...props} />} 
+                key={index}
+              />
+            )
           case 'select':
             return <CustomPicker options={options} key={index}/>
           case 'checkbox':

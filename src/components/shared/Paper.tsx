@@ -1,5 +1,6 @@
-import { VStack } from '@react-native-material/core'
-import React, { ReactNode } from 'react'
+// Modules
+import React, { ReactNode } from 'react';
+import { VStack } from '@react-native-material/core';
 
 type Props = {
   children:ReactNode
@@ -22,7 +23,7 @@ export default function Paper ({ children }:Props) {
         elevation: 2,
       }} 
       spacing={20}
-    >
+    >n
       {children}
     </VStack>
   )
