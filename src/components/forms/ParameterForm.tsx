@@ -10,62 +10,66 @@ import CustomTextField from './parameter-form/CustomTextField';
 import CustomEmailField from './parameter-form/CustomEmailField';
 import CustomPasswordField from './parameter-form/CustomPasswordField';
 import CustomNumericField from './parameter-form/CustomNumericField';
+
+// Hooks
 import useForm from '../../hooks/useForm';
 
-type FormInformation = {
-  inputs: InputInformation[];
-  formTitle: string;
+// Types
+import { AllPosibleTextsField, FieldTypes } from './parameter-form/types';
+
+export type PrimaryButtonSettings = {
   primaryButtonColor: string;
   primaryButtonTitle: string;
   primaryButtonTintColor?: string;
+}
+
+export type SecondaryButtonSettings = {
   secondaryButtonColor: string;
   secondaryButtonTitle: string;
   secondaryButtonTintColor?: string;
-  isLoading:boolean
-  inputValues:any;
+}
+
+export type FormInformation = {
+  formTitle: string;
+  isLoading:boolean;
   onSubmit: (data:any) => void;
+  inputs: AllPosibleTextsField[];
 }
 
-export type IconOptions = 'currency-usd';
-
-export type TextFieldOptions = 'text' | 'date' | 'select' | 'password' | 'email' | 'checkbox' | 'numeric';
-
-export type InputInformation = {
-  title: string;
-  inputName:string;
-  type: TextFieldOptions;
-  required?: boolean;
-  icon?: IconOptions;
-  options?: SelectInformation[];
+type ParameterFormProps = {
+  primaryButtonSettings:PrimaryButtonSettings;
+  secondaryButtonSettings:SecondaryButtonSettings;
+  formInformation:FormInformation;
 }
 
-export type SelectInformation = {
-  id: number;
-  label: string;
-}
-
-export default function ParameterForm (props:FormInformation) {
+export default function ParameterForm (props:ParameterFormProps) {
 
   const { 
-    inputs,
-    formTitle, 
-    primaryButtonTitle, 
-    secondaryButtonTitle,
-    primaryButtonColor,
-    secondaryButtonColor,
-    primaryButtonTintColor = 'white',
-    secondaryButtonTintColor = 'white',
-    isLoading,
-    inputValues,
-    onSubmit
+    formInformation, 
+    primaryButtonSettings, 
+    secondaryButtonSettings 
   } = props;
 
-  const { formValues, setFormValues } = useForm(inputValues);
+  const { 
+    primaryButtonTitle,
+    primaryButtonColor,
+    primaryButtonTintColor = 'white'
+  } = primaryButtonSettings;
 
-  function validateFormValues () {
-    const formValuesAsObject = formValues as Object;
-    Object.keys(formValuesAsObject).forEach((key) => {});
-  }
+  const {
+    secondaryButtonTitle,
+    secondaryButtonColor,
+    secondaryButtonTintColor = 'white',
+  } = secondaryButtonSettings;
+
+  const {
+    inputs,
+    formTitle, 
+    isLoading,
+    onSubmit
+  } = formInformation;
+
+  const { formValues, setFormValues } = useForm({});  
 
   return (
     <Paper>
@@ -83,7 +87,7 @@ export default function ParameterForm (props:FormInformation) {
           color={primaryButtonColor}
           tintColor={primaryButtonTintColor}
           disabled={isLoading}
-          onPress={validateFormValues}
+          onPress={onSubmit}
         />
         <Button 
           variant='contained' 
@@ -98,7 +102,7 @@ export default function ParameterForm (props:FormInformation) {
 }
 
 type TextInputListProps = {
-  inputs: InputInformation[];
+  inputs: AllPosibleTextsField[];
   isLoading: boolean;
   formValues: any;
   setFormValues: React.Dispatch<any>;
@@ -108,11 +112,12 @@ function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInp
 
   return (
     <VStack mb={20}>
-      {inputs.map(({ type, title, options = [], icon, inputName, required = true }, index) => { 
+      {inputs.map(({ title, inputName, required = true, type, icon }, index) => { 
         switch (type) {
-          case 'text':
+          case FieldTypes.TEXT:
             return (
               <CustomTextField 
+                icon={icon}
                 title={title} 
                 key={index} 
                 isLoading={isLoading} 
@@ -122,9 +127,10 @@ function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInp
                 setFormValues={setFormValues}
               />
             )
-          case 'email':
+          case FieldTypes.EMAIL:
             return (
               <CustomEmailField 
+                icon={icon}
                 title={title} 
                 key={index} 
                 isLoading={isLoading} 
@@ -134,9 +140,10 @@ function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInp
                 setFormValues={setFormValues}
               />
             )
-          case 'password':
+          case FieldTypes.PASSWORD:
             return (
               <CustomPasswordField 
+                icon={icon}
                 title={title} 
                 key={index} 
                 isLoading={isLoading} 
@@ -146,7 +153,7 @@ function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInp
                 setFormValues={setFormValues}
               />
             )
-          case 'numeric':
+          case FieldTypes.NUMERIC:
             return (
               <CustomNumericField 
                 icon={icon} 
@@ -159,10 +166,10 @@ function TextInputList ({ inputs, isLoading, formValues, setFormValues }:TextInp
                 setFormValues={setFormValues}
               />
             ) 
-          case 'select':
-            return <CustomPicker options={options} key={index}/>
-          case 'checkbox':
-            return <CustomCheckBox title={title} key={index}/>
+          // case 'select':
+          //   return <CustomPicker options={options} key={index}/>
+          // case 'checkbox':
+          //   return <CustomCheckBox title={title} key={index}/>
           default:
             return <></>
         } 

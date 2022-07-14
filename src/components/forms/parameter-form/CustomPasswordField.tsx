@@ -1,13 +1,10 @@
 // Modules
-import React from 'react'
-import { TextInput } from '@react-native-material/core'
+import React from 'react';
+import { TextInput } from '@react-native-material/core';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 // Types
 import { CustomTextInputProps } from './CustomTextField';
-
-type Props = {
-  title:string;
-}
 
 export default function CustomPasswordField (props:CustomTextInputProps) {
 
@@ -16,7 +13,8 @@ export default function CustomPasswordField (props:CustomTextInputProps) {
     inputName, 
     isLoading,
     formValues,
-    setFormValues
+    setFormValues,
+    icon
   } = props
 
   return (
@@ -26,8 +24,7 @@ export default function CustomPasswordField (props:CustomTextInputProps) {
       secureTextEntry={true} 
       style={{ marginBottom:10 }}
       editable={!isLoading}
-      value={formValues[inputName].value as string}
-      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ value:text, error:'' }})}
+      leading={props => icon && <Icon name={icon as any} {...props} />} 
     />
   )
 }

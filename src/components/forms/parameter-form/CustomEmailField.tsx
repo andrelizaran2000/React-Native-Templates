@@ -1,7 +1,11 @@
 // Modules
-import React from 'react'
-import { TextInput } from '@react-native-material/core'
-import { CustomTextInputProps } from './CustomTextField'
+import React from 'react';
+import { TextInput } from '@react-native-material/core';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
+// Types
+import { IconOptions } from './types';
+import { CustomTextInputProps } from './CustomTextField';
 
 export default function CustomEmailField (props:CustomTextInputProps) {
 
@@ -10,7 +14,9 @@ export default function CustomEmailField (props:CustomTextInputProps) {
     inputName, 
     isLoading,
     formValues,
-    setFormValues
+    setFormValues,
+    required,
+    icon
   } = props
 
   return (
@@ -20,8 +26,7 @@ export default function CustomEmailField (props:CustomTextInputProps) {
       keyboardType='email-address' 
       editable={!isLoading}
       style={{ marginBottom:10 }}
-      value={formValues[inputName].value as string}
-      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ value:text, error:'' }})}
+      leading={props => icon && <Icon name={icon as IconOptions} {...props} />} 
     />
   )
 }

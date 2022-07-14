@@ -1,6 +1,7 @@
 // Modules
-import React from 'react'
-import { TextInput } from '@react-native-material/core'
+import React from 'react';
+import { TextInput } from '@react-native-material/core';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 export type CustomTextInputProps = {
   title:string
@@ -9,6 +10,7 @@ export type CustomTextInputProps = {
   inputName:string;
   formValues: any;
   setFormValues: React.Dispatch<any>;
+  icon?:string;
 }
 
 export default function CustomTextField (props:CustomTextInputProps) {
@@ -18,7 +20,8 @@ export default function CustomTextField (props:CustomTextInputProps) {
     isLoading,
     formValues,
     setFormValues,
-    inputName
+    inputName,
+    icon
   } = props
 
   return (
@@ -27,9 +30,7 @@ export default function CustomTextField (props:CustomTextInputProps) {
       label={title} 
       style={{ marginBottom:10 }}
       editable={!isLoading}
-      value={formValues[inputName].value as string}
-      onChangeText={(text) => setFormValues({ ...formValues, [inputName]:{ value:text, error:'' }})}
-      helperText={formValues[inputName].error || undefined}
+      leading={props => icon && <Icon name={icon as any} {...props} />} 
     />
   )
 }

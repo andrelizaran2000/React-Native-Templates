@@ -3,68 +3,48 @@ import React from 'react';
 
 // Components
 import PaddingContainer from '../components/containers/PaddingContainer';
-import ParameterForm, { InputInformation, SelectInformation } from '../components/forms/ParameterForm';
+
+// Types
+import { 
+  AllPosibleTextsField, 
+  FieldTypes 
+} from '../components/forms/parameter-form/types';
+
+import 
+  ParameterForm, 
+  { 
+    FormInformation, 
+    PrimaryButtonSettings, 
+    SecondaryButtonSettings 
+  } 
+from '../components/forms/ParameterForm';
 
 // Hooks
 import useCustomPalette from '../hooks/useCustomPalette';
 
-const brandOptions:SelectInformation[] = [
-  { id:1, label:'Samsung' },
-  { id:2, label:'Xiaomi' },
-  { id:3, label:'Sony' },
-  { id:4, label:'Apple' },
-]
-
-const statusOptions:SelectInformation[] = [
-  { id:1, label:'Estatus 1' },
-  { id:2, label:'Estatus 2' },
-  { id:3, label:'Estatus 3' },
-  { id:4, label:'Estatus 4' },
-]
-
-// Tienen que concordar los nombres con los inputNames
-const inputValues = {
-  productName: {
-    value:'',
-    error:''
-  },
-  productModel:{
-    value:'',
-    error:''
-  },
-  productPrice:{
-    value:'',
-    error:''
-  },
-  productSave:{
-    value:'',
-    error:''
-  },
-}
-
-const inputs:InputInformation[] = [
-  { 
+const inputs:AllPosibleTextsField[] = [
+  {
     title:'Nombre del producto', 
-    type:'text',
-    inputName: 'productName'
+    type:FieldTypes.TEXT,
+    inputName:'productName'
   },
-  { 
-    title:'Modelo', 
-    type:'text',
-    inputName: 'productModel'
+  {
+    title:'Nombre del producto', 
+    type:FieldTypes.TEXT,
+    inputName:'productModel'
   },
-  { 
+  {
     title:'Precio', 
-    type:'numeric', 
+    type:FieldTypes.NUMERIC, 
     icon:'currency-usd',
-    inputName: 'productPrice'
+    inputName:'productPrice'
   },
-  { 
+  {
     title:'Garantía extendida', 
-    type:'checkbox',
-    inputName: 'productSave'
+    type:FieldTypes.CHECKBOX,
+    inputName:'productSave'
   }
-];
+]
 
 export default function AddNewProduct () {
 
@@ -74,18 +54,29 @@ export default function AddNewProduct () {
 
   const isLoading = false;
 
+  const formInformation:FormInformation = {
+    onSubmit:onSubmit,
+    formTitle:'Agregar nuevo producto',
+    inputs:inputs,
+    isLoading:isLoading
+  }
+
+  const primaryButtonSettings:PrimaryButtonSettings = {
+    primaryButtonColor:secondary,
+    primaryButtonTitle:'Agregar'
+  }
+
+  const secondaryButtonSettings:SecondaryButtonSettings = {
+    secondaryButtonColor:cancel,
+    secondaryButtonTitle:'Cancelar'
+  }
+
   return (
     <PaddingContainer>
       <ParameterForm
-        inputValues={inputValues}
-        onSubmit={onSubmit}
-        formTitle='Agregar nuevo producto'
-        primaryButtonColor={secondary}
-        primaryButtonTitle='Agregar'
-        secondaryButtonColor={cancel}
-        secondaryButtonTitle='Cancelar'
-        inputs={inputs}
-        isLoading={isLoading}
+        formInformation={formInformation}
+        primaryButtonSettings={primaryButtonSettings}
+        secondaryButtonSettings={secondaryButtonSettings}
       />
     </PaddingContainer>
   )
