@@ -15,7 +15,6 @@ type CustomPickerProps = {
   options:OptionProps[];
   values:FormValuesProps;
   setValue:(inputName: string, text: string) => void;
-  label:string;
 }
 
 type OptionProps = {
@@ -23,14 +22,14 @@ type OptionProps = {
   label:string;
 }
 
-export default function CustomPicker ({ dialogTitle, options, setValue, values, label }:CustomPickerProps) {
+export default function CustomPicker ({ dialogTitle, options, setValue, values }:CustomPickerProps) {
 
   const { border } = useCustomPalette();
   const [visible, setVisible] = useState(false);
 
   return (
     <>
-      <Text style={{ marginBottom:10 }}>{label}</Text>
+      <Text style={{ marginBottom:10 }}>{values.label}</Text>
       <TouchableOpacity onPress={() => setVisible(true)} style={{ marginBottom:0 }}>
         <Box style={{ borderRadius:5, borderWidth:1, borderColor:border, padding:15, marginBottom:10 }}>
           <HStack style={{ width:'100%', alignItems:'center', justifyContent:'space-between' }}>
@@ -46,7 +45,6 @@ export default function CustomPicker ({ dialogTitle, options, setValue, values, 
             {options.map(({ id, label }, index) => (
               <ListItem
                 title={label}
-                leading={<Icon name="cellphone" size={24} />}
                 onPress={() => { setValue(values.inputName, label); setVisible(false) }}
                 key={index}
               />

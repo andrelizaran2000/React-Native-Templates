@@ -47,22 +47,26 @@ export default function AddNewProduct () {
       value:'',
       error:'',
       inputName: 'productName',
+      label:'Nombre del producto'
     },
     productModel: {
       value:'',
       error:'',
-      inputName: 'productModel'
+      inputName: 'productModel',
+      label:'Modelo del producto'
     },
     productPrice: {
       value:'',
       error:'',
       inputName: 'productPrice',
-      icon: 'currency-usd'
+      icon: 'currency-usd',
+      label:'Precio del producto'
     },
     productBrand: {
       value:'',
       error:'',
       inputName: 'productBrand',
+      label:'Marca del producto',
     }
   }
 
@@ -73,7 +77,8 @@ export default function AddNewProduct () {
     { id:4, label:'Apple' },
   ]
 
-  const { formValues, handleChange } = useForm(inputValues);
+  const form = useForm(inputValues);
+  const formValues = form.formValues as AddProductProps;
 
   return (
     <PaddingContainer>
@@ -83,28 +88,24 @@ export default function AddNewProduct () {
         secondaryButtonSettings={secondaryButtonSettings}
       >
         <CustomTextField 
-          label='Nombre del producto' 
           values={formValues.productName}
-          setValue={handleChange}
+          setValue={form.handleChange}
           isLoading={isLoading}
         />
         <CustomTextField 
-          label='Modelo del producto' 
           values={formValues.productModel}
-          setValue={handleChange}
+          setValue={form.handleChange}
           isLoading={isLoading}
         />
         <CustomNumericField 
-          label='Precio del producto' 
           values={formValues.productPrice}
-          setValue={handleChange}
+          setValue={form.handleChange}
           isLoading={isLoading}
         />
         <CustomPicker 
-          label='Marca del producto'
           dialogTitle='Selecciona una marca' 
           options={brandOptions}
-          setValue={handleChange}
+          setValue={form.handleChange}
           values={formValues.productBrand}
         />
         <CustomImageField label='Fotografía'/>

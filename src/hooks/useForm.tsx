@@ -1,16 +1,22 @@
 // Modules
 import { useState } from 'react';
 
-export type FieldOptions = AddProductProps;
-
 export type IconOptions = 'currency-usd'
 
+// Common props
 export type FormValuesProps = {
   value:string,
   error:string,
   inputName:string;
   icon?: IconOptions;
   required?: boolean;
+  label:string;
+}
+
+// Forms
+export type SignInProps = {
+  email: FormValuesProps;
+  password: FormValuesProps;
 }
 
 export type AddProductProps = {
@@ -19,6 +25,8 @@ export type AddProductProps = {
   productPrice:FormValuesProps,
   productBrand:FormValuesProps,
 }
+
+export type FieldOptions = AddProductProps | SignInProps;
 
 export default function useForm (initialState:FieldOptions) {
 
@@ -31,7 +39,9 @@ export default function useForm (initialState:FieldOptions) {
         error:'', 
         value:text, 
         // @ts-ignore
-        inputName:formValues[inputName].inputName 
+        inputName:formValues[inputName].inputName,
+        // @ts-ignore
+        label:formValues[inputName].label,
       }
     })
   }

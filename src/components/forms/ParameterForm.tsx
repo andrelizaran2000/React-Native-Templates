@@ -15,6 +15,7 @@ export type SecondaryButtonSettings = {
   secondaryButtonColor: string;
   secondaryButtonTitle: string;
   secondaryButtonTintColor?: string;
+  secondaryButtonShown?: boolean;
 }
 
 export type FormInformation = {
@@ -49,6 +50,7 @@ export default function ParameterForm (props:ParameterFormProps) {
     secondaryButtonTitle,
     secondaryButtonColor,
     secondaryButtonTintColor = 'white',
+    secondaryButtonShown = true
   } = secondaryButtonSettings;
 
   const {
@@ -70,13 +72,18 @@ export default function ParameterForm (props:ParameterFormProps) {
           disabled={isLoading}
           onPress={onSubmit}
         />
-        <Button 
-          variant='contained' 
-          title={secondaryButtonTitle}
-          color={secondaryButtonColor}
-          tintColor={secondaryButtonTintColor}
-          disabled={isLoading}
-        />
+        { 
+          secondaryButtonShown 
+          && 
+          <Button 
+            variant='contained' 
+            title={secondaryButtonTitle}
+            color={secondaryButtonColor}
+            tintColor={secondaryButtonTintColor}
+            disabled={isLoading}
+          />
+        }
+          
       </HStack>
     </Paper>
   )

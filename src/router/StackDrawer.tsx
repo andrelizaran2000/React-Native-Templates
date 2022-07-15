@@ -13,8 +13,8 @@ export default function StackDrawer() {
   return (
     <Provider>
       <Stack.Navigator>
-        <Stack.Screen name='logged' options={{ headerShown:false }} component={DrawerRouter}/>
         <Stack.Screen name="sign" options={{ title:'Iniciar sesión' }} component={Sign}/>
+        <Stack.Screen name='logged' options={{ headerShown:false }} component={DrawerRouter}/>
       </Stack.Navigator>
     </Provider>
   );

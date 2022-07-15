@@ -6,7 +6,6 @@ import { TextInput } from '@react-native-material/core';
 import { FormValuesProps } from '../../hooks/useForm';
 
 export type CommonFieldProps = {
-  label:string;
   isLoading:boolean;
   values:FormValuesProps;
   setValue:(inputName: string, text: string) => void;
@@ -15,7 +14,6 @@ export type CommonFieldProps = {
 export default function CustomTextField (props:CommonFieldProps) {
 
   const {
-    label,
     isLoading,
     values,
     setValue
@@ -27,7 +25,7 @@ export default function CustomTextField (props:CommonFieldProps) {
       editable={!isLoading}
       value={values.value}
       onChangeText={(text) => setValue(values.inputName, text)}
-      label={label}
+      label={values.label}
       style={{ marginBottom:10 }}
     />
   )

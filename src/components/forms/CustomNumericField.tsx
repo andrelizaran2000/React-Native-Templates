@@ -9,11 +9,12 @@ import { CommonFieldProps } from './CustomTextField';
 export default function CustomNumericField (props:CommonFieldProps) {
 
   const {
-    label,
     isLoading,
     values,
     setValue
   } = props;
+  
+  console.log(values)
 
   return (
     <TextInput 
@@ -21,7 +22,7 @@ export default function CustomNumericField (props:CommonFieldProps) {
       editable={!isLoading}
       value={values.value}
       onChangeText={(text) => setValue(values.inputName, text)}
-      label={label}
+      label={values.label}
       keyboardType='numeric'
       style={{ marginBottom:10 }}
       leading={props => values.icon ? <Icon name={values.icon} {...props} /> : undefined}

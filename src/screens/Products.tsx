@@ -1,7 +1,7 @@
 // Modules
 import React from 'react';
-import { ScrollView } from 'react-native';
-import { Dimensions } from 'react-native';
+import { ScrollView, Dimensions } from 'react-native';
+
 import { Box, ListItem, Text, VStack } from '@react-native-material/core';
 
 // Components
@@ -27,8 +27,8 @@ export default function Products () {
         <Text variant='h6'>Productos disponibles</Text>
           <ScrollView style={{ maxHeight:(windowHeight-210) }}>
             <VStack >
-            {productList.map((props, index) => <ProductItem {...props} key={index}/>)}
-          </VStack> 
+              {productList.map((props, index) => <ProductItem {...props} key={index}/>)}
+            </VStack> 
         </ScrollView>
       </Paper>
     </Box>
