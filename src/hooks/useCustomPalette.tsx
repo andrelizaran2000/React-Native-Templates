@@ -5,7 +5,8 @@ export default function useCustomPalette () {
     background: '#EEE',
     cancel: '#DDD',
     border: '#AAA',
-    actionBar: '#3949ab'
+    actionBar: '#3949ab',
+    darkGray: '#212121'
   }
   return palette;
 }

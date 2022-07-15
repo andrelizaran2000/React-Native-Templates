@@ -1,11 +1,13 @@
 // Modules
 import React, { useState } from 'react'
+import { TouchableOpacity } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogHeader, HStack, ListItem, Text, VStack } from '@react-native-material/core'
 
 // Hooks
 import useCustomPalette from '../../hooks/useCustomPalette';
-import { TouchableOpacity } from 'react-native';
+
+// Types
 import { FormValuesProps } from '../../hooks/useForm';
 
 type CustomPickerProps = {
@@ -29,7 +31,7 @@ export default function CustomPicker ({ dialogTitle, options, setValue, values, 
   return (
     <>
       <Text style={{ marginBottom:10 }}>{label}</Text>
-      <TouchableOpacity onPress={() => setVisible(true)}>
+      <TouchableOpacity onPress={() => setVisible(true)} style={{ marginBottom:10 }}>
         <Box style={{ borderRadius:5, borderWidth:1, borderColor:border, padding:15, marginBottom:10 }}>
           <HStack style={{ width:'100%', alignItems:'center', justifyContent:'space-between' }}>
             <Text>{values.value}</Text>
@@ -39,11 +41,12 @@ export default function CustomPicker ({ dialogTitle, options, setValue, values, 
             <DialogHeader title={dialogTitle} />
             <DialogContent>
               <VStack>
-                {options.map(({ id, label }) => (
+                {options.map(({ id, label }, index) => (
                   <ListItem
                     title={label}
                     leading={<Icon name="cellphone" size={24} />}
                     onPress={() => { setValue(values.inputName, label); setVisible(false) }}
+                    key={index}
                   />
                 ))}
               </VStack>

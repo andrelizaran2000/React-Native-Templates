@@ -52,7 +52,6 @@ export default function AddNewProduct () {
       value:'',
       error:'',
       inputName: 'productName',
-
     },
     productModel: {
       value:'',
