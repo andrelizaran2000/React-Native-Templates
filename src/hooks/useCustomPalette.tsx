@@ -4,7 +4,7 @@ export default function useCustomPalette () {
     secondary: '#e53935',
     background: '#EEE',
     cancel: '#DDD',
-    disabled: '#AAA',
+    border: '#AAA',
     actionBar: '#3949ab'
   }
   return palette;

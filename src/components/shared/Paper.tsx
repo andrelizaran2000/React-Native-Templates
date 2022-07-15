@@ -23,7 +23,7 @@ export default function Paper ({ children }:Props) {
         elevation: 2,
       }} 
       spacing={20}
-    >n
+    >
       {children}
     </VStack>
   )

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 
 // Components
+import CustomPicker from '../components/forms/CustomPicker';
 import CustomTextField from '../components/forms/CustomTextField';
 import CustomNumericField from '../components/forms/CustomNumericField';
 import PaddingContainer from '../components/containers/PaddingContainer';
@@ -63,10 +64,23 @@ export default function AddNewProduct () {
       error:'',
       inputName: 'productPrice',
       icon: 'currency-usd'
+    },
+    productBrand: {
+      value:'',
+      error:'',
+      inputName: 'productBrand',
     }
   }
 
+  const brandOptions = [
+    { id:1, label:'Xiaomi' },
+    { id:2, label:'Samsung' },
+    { id:3, label:'Sony' },
+    { id:4, label:'Apple' },
+  ]
+
   const { formValues, handleChange } = useForm(inputValues);
+  console.log(formValues);
 
   return (
     <PaddingContainer>
@@ -92,6 +106,13 @@ export default function AddNewProduct () {
           values={formValues.productPrice}
           setValue={handleChange}
           isLoading={isLoading}
+        />
+        <CustomPicker 
+          label='Marca del producto'
+          dialogTitle='Selecciona una marca' 
+          options={brandOptions}
+          setValue={handleChange}
+          values={formValues.productBrand}
         />
       </ParameterForm>
     </PaddingContainer>

@@ -17,6 +17,7 @@ export type AddProductProps = {
   productName:FormValuesProps,
   productModel:FormValuesProps,
   productPrice:FormValuesProps,
+  productBrand:FormValuesProps,
 }
 
 export default function useForm (initialState:FieldOptions) {

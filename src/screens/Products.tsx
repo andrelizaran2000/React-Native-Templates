@@ -46,6 +46,7 @@ function ProductItem ({ title, secondary }:ProductItemProps) {
     <ListItem
       title={title}
       secondaryText={secondary}
+      
     />
   )
 }
