@@ -67,6 +67,12 @@ export default function AddNewProduct () {
       error:'',
       inputName: 'productBrand',
       label:'Marca del producto',
+    },
+    productImage: {
+      value:'',
+      error:'',
+      inputName: 'productBrand',
+      label:'Marca del producto',
     }
   }
 
@@ -108,7 +114,9 @@ export default function AddNewProduct () {
           setValue={form.handleChange}
           values={formValues.productBrand}
         />
-        <CustomImageField label='Fotografía'/>
+        <CustomImageField 
+          label='Fotografía'
+        />
       </ParameterForm>
     </PaddingContainer>
   )

@@ -1,7 +1,7 @@
 // Modules
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Camera, CameraType } from 'expo-camera'; 
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Box, IconButton, VStack } from '@react-native-material/core';
 

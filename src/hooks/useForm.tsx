@@ -20,10 +20,11 @@ export type SignInProps = {
 }
 
 export type AddProductProps = {
-  productName:FormValuesProps,
-  productModel:FormValuesProps,
-  productPrice:FormValuesProps,
-  productBrand:FormValuesProps,
+  productName:FormValuesProps;
+  productModel:FormValuesProps;
+  productPrice:FormValuesProps;
+  productBrand:FormValuesProps;
+  productImage:FormValuesProps;
 }
 
 export type FieldOptions = AddProductProps | SignInProps;
