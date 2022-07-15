@@ -31,32 +31,32 @@ export default function CustomPicker ({ dialogTitle, options, setValue, values, 
   return (
     <>
       <Text style={{ marginBottom:10 }}>{label}</Text>
-      <TouchableOpacity onPress={() => setVisible(true)} style={{ marginBottom:10 }}>
+      <TouchableOpacity onPress={() => setVisible(true)} style={{ marginBottom:0 }}>
         <Box style={{ borderRadius:5, borderWidth:1, borderColor:border, padding:15, marginBottom:10 }}>
           <HStack style={{ width:'100%', alignItems:'center', justifyContent:'space-between' }}>
             <Text>{values.value}</Text>
             <Icon name='chevron-down'/>
           </HStack>
-          <Dialog visible={visible} onDismiss={() => setVisible(false)}>
-            <DialogHeader title={dialogTitle} />
-            <DialogContent>
-              <VStack>
-                {options.map(({ id, label }, index) => (
-                  <ListItem
-                    title={label}
-                    leading={<Icon name="cellphone" size={24} />}
-                    onPress={() => { setValue(values.inputName, label); setVisible(false) }}
-                    key={index}
-                  />
-                ))}
-              </VStack>
-            </DialogContent>
-            <DialogActions>
-              <Button title="Cancelar" compact variant="text" onPress={() => setVisible(false)}/>
-            </DialogActions>
-          </Dialog>
         </Box>
       </TouchableOpacity>
+      <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+        <DialogHeader title={dialogTitle} />
+        <DialogContent>
+          <VStack>
+            {options.map(({ id, label }, index) => (
+              <ListItem
+                title={label}
+                leading={<Icon name="cellphone" size={24} />}
+                onPress={() => { setValue(values.inputName, label); setVisible(false) }}
+                key={index}
+              />
+            ))}
+          </VStack>
+        </DialogContent>
+        <DialogActions>
+          <Button title="Cancelar" compact variant="text" onPress={() => setVisible(false)}/>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }

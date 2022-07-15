@@ -3,10 +3,10 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // Screens
-import Products from '../screens/Products';
-import AddNewProduct from '../screens/AddNewProduct';
 import Camera from '../screens/Camera';
+import Products from '../screens/Products';
 import ResultImage from '../screens/ResultImage';
+import AddNewProduct from '../screens/AddNewProduct';
 
 const Drawer = createDrawerNavigator();
  
@@ -19,7 +19,7 @@ export default function DrawerRouter() {
         component={Products} 
       />
       <Drawer.Screen 
-        name="add-product" 
+        name="addProduct" 
         options={{ title:'Agregar producto' }} 
         component={AddNewProduct} 
       />
@@ -29,7 +29,7 @@ export default function DrawerRouter() {
         component={Camera} 
       />
       <Drawer.Screen 
-        name="result-image" 
+        name="resultImage" 
         options={{ title:'Resultado', headerShown:false, swipeEnabled:false }} 
         component={ResultImage} 
       />

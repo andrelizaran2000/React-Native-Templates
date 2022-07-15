@@ -1,26 +1,25 @@
 // Modules
-import React, { useState } from 'react';
+import React from 'react';
 
 // Components
 import CustomPicker from '../components/forms/CustomPicker';
 import CustomTextField from '../components/forms/CustomTextField';
 import CustomNumericField from '../components/forms/CustomNumericField';
 import PaddingContainer from '../components/containers/PaddingContainer';
-
-import 
-  ParameterForm, 
-  { 
-    FormInformation, 
-    PrimaryButtonSettings, 
-    SecondaryButtonSettings 
-  } 
-from '../components/forms/ParameterForm';
+import ParameterForm, { FormInformation, PrimaryButtonSettings, SecondaryButtonSettings } from '../components/forms/ParameterForm';
 
 // Hooks
 import useCustomPalette from '../hooks/useCustomPalette';
-import useForm, { AddProductProps } from '../hooks/useForm';
 
-export default function AddNewProduct () {
+// Types
+import useForm, { AddProductProps } from '../hooks/useForm';
+import CustomImageField from '../components/forms/CustomImageField';
+
+type Props = {
+  navigation:any;
+}
+
+export default function AddNewProduct ({ navigation }:Props) {
 
   const { secondary, cancel } = useCustomPalette();
 
@@ -79,7 +78,6 @@ export default function AddNewProduct () {
   ]
 
   const { formValues, handleChange } = useForm(inputValues);
-  console.log(formValues);
 
   return (
     <PaddingContainer>
@@ -112,6 +110,10 @@ export default function AddNewProduct () {
           options={brandOptions}
           setValue={handleChange}
           values={formValues.productBrand}
+        />
+        <CustomImageField 
+          label='Fotografía' 
+          navigation={navigation}
         />
       </ParameterForm>
     </PaddingContainer>
