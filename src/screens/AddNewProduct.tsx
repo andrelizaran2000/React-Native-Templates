@@ -15,11 +15,7 @@ import useCustomPalette from '../hooks/useCustomPalette';
 import useForm, { AddProductProps } from '../hooks/useForm';
 import CustomImageField from '../components/forms/CustomImageField';
 
-type Props = {
-  navigation:any;
-}
-
-export default function AddNewProduct ({ navigation }:Props) {
+export default function AddNewProduct () {
 
   const { secondary, cancel } = useCustomPalette();
 
@@ -111,10 +107,7 @@ export default function AddNewProduct ({ navigation }:Props) {
           setValue={handleChange}
           values={formValues.productBrand}
         />
-        <CustomImageField 
-          label='Fotografía' 
-          navigation={navigation}
-        />
+        <CustomImageField label='Fotografía'/>
       </ParameterForm>
     </PaddingContainer>
   )

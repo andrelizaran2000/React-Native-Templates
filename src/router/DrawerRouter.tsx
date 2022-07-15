@@ -1,12 +1,24 @@
 // Modules
 import React from 'react';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerNavigationProp } from '@react-navigation/drawer';
 
 // Screens
 import Camera from '../screens/Camera';
 import Products from '../screens/Products';
 import ResultImage from '../screens/ResultImage';
 import AddNewProduct from '../screens/AddNewProduct';
+
+export type RootStackParamList = {
+  products: undefined;
+  addProduct: undefined;
+  camera: undefined;
+  resultImage: {
+    uri:string;
+    base64:string;
+  }
+};  
+
+export type DrawerNavigation = DrawerNavigationProp<RootStackParamList>;
 
 const Drawer = createDrawerNavigator();
  

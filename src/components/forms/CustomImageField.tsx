@@ -1,18 +1,24 @@
 // Modules
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { HStack, IconButton, Text } from '@react-native-material/core'
+import { HStack, IconButton, Text } from '@react-native-material/core';
+
+// Hooks
 import useCustomPalette from '../../hooks/useCustomPalette';
+
+// Types
+import { DrawerNavigation } from '../../router/DrawerRouter';
 
 type CustomImageFieldProps = {
   label:string;
-  navigation:any;
 }
 
 export default function CustomImageField (props:CustomImageFieldProps) {
 
-  const { label, navigation } = props;
-  const { border } = useCustomPalette()
+  const { label } = props;
+  const { border } = useCustomPalette();
+  const navigation = useNavigation<DrawerNavigation>();
 
   return (
     <HStack style={{ justifyContent:'space-between', alignItems:'center', marginBottom:10 }}>
